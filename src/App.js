@@ -13,14 +13,16 @@ class App extends Component {
     // console.log(user);
     const user = e.target.elements.username.value;
     const url = `https://api.github.com/users/${user}`;
-    axios.get(url).then(res => {
-      // console.log(res);
-      const repos = res.data.public_repos;
-      // console.log(repos);
-      this.setState({
-        repos
+    if (user) {
+      axios.get(url).then(res => {
+        // console.log(res);
+        const repos = res.data.public_repos;
+        // console.log(repos);
+        this.setState({
+          repos
+        });
       });
-    });
+    } else return;
   };
 
   render() {
@@ -31,7 +33,7 @@ class App extends Component {
         </header>
         <UserForm getUser={this.getUser} />
         {this.state.repos ? (
-          <p>Number of repose: {this.state.repos}</p>
+          <p>Number of repos: {this.state.repos}</p>
         ) : (
           <p>Please enter a username</p>
         )}
